@@ -2,7 +2,7 @@
   (:require [clojure.tools.logging :as log]
             [clojure.java.io :as io])
   (:import (org.apache.poi.xwpf.usermodel XWPFDocument)
-           (org.apache.poi POIXMLDocument)
+           (org.apache.poi.ooxml POIXMLDocument)
            (java.io File)))
 
 (defn temp-output-file []

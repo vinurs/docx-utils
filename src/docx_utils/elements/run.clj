@@ -1,6 +1,8 @@
 (ns docx-utils.elements.run
   (:require [clojure.tools.logging :as log])
-  (:import (org.apache.poi.xwpf.usermodel XWPFRun XWPFParagraph TextSegement)
+  (:import (org.apache.poi.xwpf.usermodel XWPFRun XWPFParagraph ;; TextSegement
+                                          )
+           (org.apache.poi.xwpf.usermodel TextSegment )
            (org.openxmlformats.schemas.wordprocessingml.x2006.main STHighlightColor$Enum)))
 
 (defn- configure-run [^XWPFRun run {:keys [text pos bold highlight-color]
@@ -54,17 +56,17 @@
    nil
    (reverse (rest run-range))))
 
-(defn find-first-found-run [^XWPFParagraph par ^TextSegement found-segment]
+(defn find-first-found-run [^XWPFParagraph par ^TextSegment found-segment]
   (.get (.getRuns par)
         (.getBeginRun found-segment)))
 
-(defn run-id-range [^TextSegement found-segment]
+(defn run-id-range [^TextSegment found-segment]
   (range
    (.getBeginRun found-segment)
    (inc (.getEndRun found-segment))))
 
 (defn merge-runs!
-  [^XWPFParagraph par ^TextSegement found-segment]
+  [^XWPFParagraph par ^TextSegment found-segment]
   (let [run-ids (run-id-range found-segment)]
     (.setText
      (find-first-found-run par found-segment)
